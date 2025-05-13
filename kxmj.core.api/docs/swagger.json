@@ -1,0 +1,1537 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "core-api 服务接口",
+        "title": "core-api 服务接口",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/app/get-base": {
+            "get": {
+                "description": "APP",
+                "tags": [
+                    "APP"
+                ],
+                "summary": "获取APP基础信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetAppBaseInfoResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/app/get-gateways": {
+            "get": {
+                "description": "APP",
+                "tags": [
+                    "APP"
+                ],
+                "summary": "获取网关地址",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetGatewayResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/app/get-home": {
+            "get": {
+                "description": "APP",
+                "tags": [
+                    "APP"
+                ],
+                "summary": "获取首页信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetHomeResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/app/get-items": {
+            "get": {
+                "description": "APP",
+                "tags": [
+                    "APP"
+                ],
+                "summary": "获取物品列表",
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.ItemData"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/app/sync-device": {
+            "post": {
+                "description": "APP",
+                "tags": [
+                    "APP"
+                ],
+                "summary": "同步设备信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SyncDeviceReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.SyncDeviceResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/game/room-list": {
+            "post": {
+                "description": "GAME",
+                "tags": [
+                    "GAME"
+                ],
+                "summary": "获取房间列表信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RoomListReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.RoomListResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/lobby/get-wallet": {
+            "get": {
+                "description": "LOBBY",
+                "tags": [
+                    "LOBBY"
+                ],
+                "summary": "获取用户钱包信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetWalletResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/recharge/get-continue-pack": {
+            "get": {
+                "description": "RECHARGE",
+                "tags": [
+                    "RECHARGE"
+                ],
+                "summary": "首充连续领取礼包信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetContinueGiftPackResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/recharge/get-first-pack": {
+            "get": {
+                "description": "RECHARGE",
+                "tags": [
+                    "RECHARGE"
+                ],
+                "summary": "获取首充礼包信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetFistRechargeGiftPackResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/recharge/take-continue-pack": {
+            "get": {
+                "description": "RECHARGE",
+                "tags": [
+                    "RECHARGE"
+                ],
+                "summary": "领取首充连续领取礼包",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TakeContinueGiftPackReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.TakeContinueGiftPackResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/sms/send": {
+            "post": {
+                "description": "SMS",
+                "tags": [
+                    "SMS"
+                ],
+                "summary": "发送短信",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SendSmsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.SendSmsResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/bind-phone": {
+            "post": {
+                "description": "USER",
+                "tags": [
+                    "USER"
+                ],
+                "summary": "绑定手机号",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.BindPhoneNumReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.BindPhoneNumResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/change-password": {
+            "post": {
+                "description": "USER",
+                "tags": [
+                    "USER"
+                ],
+                "summary": "修改密码",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ChangePasswordReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.ChangePasswordResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/get-info": {
+            "get": {
+                "description": "USER",
+                "tags": [
+                    "USER"
+                ],
+                "summary": "获取用户信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.GetInfoResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/login": {
+            "post": {
+                "description": "USER",
+                "tags": [
+                    "USER"
+                ],
+                "summary": "手机登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.LoginResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/tel-register": {
+            "post": {
+                "description": "USER",
+                "tags": [
+                    "USER"
+                ],
+                "summary": "手机注册",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.TelRegisterReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.TelRegisterResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/token-login": {
+            "get": {
+                "description": "USER",
+                "tags": [
+                    "USER"
+                ],
+                "summary": "Token登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.LoginResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "item.GiftPackContent": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "description": "物品数量 如果是随机值在配置时填0，计算时生成值",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "物品ID",
+                    "type": "integer"
+                },
+                "max": {
+                    "description": "随机数量最大值",
+                    "type": "string"
+                },
+                "min": {
+                    "description": "随机数量最小值",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "物品类型",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.AndroidInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "android id",
+                    "type": "string"
+                },
+                "imei": {
+                    "description": "自定义imei",
+                    "type": "string"
+                },
+                "sdk": {
+                    "description": "android sdk 版本",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.BindPhoneNumReq": {
+            "type": "object",
+            "required": [
+                "SMSCode",
+                "telNumber",
+                "userId"
+            ],
+            "properties": {
+                "SMSCode": {
+                    "description": "短信验证码",
+                    "type": "string"
+                },
+                "telNumber": {
+                    "description": "手机号码",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "user id",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.BindPhoneNumResp": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "description": "绑定成功通知",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ChangePasswordReq": {
+            "type": "object",
+            "required": [
+                "NewPassword",
+                "SMSCode",
+                "telNumber"
+            ],
+            "properties": {
+                "NewPassword": {
+                    "description": "新的密码",
+                    "type": "string"
+                },
+                "SMSCode": {
+                    "description": "短信验证码",
+                    "type": "string"
+                },
+                "telNumber": {
+                    "description": "手机号码",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ChangePasswordResp": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "description": "修改成功通知",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ContinueGiftPack": {
+            "type": "object",
+            "properties": {
+                "goodsId": {
+                    "description": "礼包商品Id",
+                    "type": "string"
+                },
+                "isBuy": {
+                    "description": "是否已购买",
+                    "type": "boolean"
+                },
+                "packItems": {
+                    "description": "礼包物品列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/recharge.Item"
+                    }
+                },
+                "status": {
+                    "description": "领取状态 0 未完成；1 已完成；2 已领取",
+                    "type": "integer"
+                },
+                "witchDay": {
+                    "description": "第几天领取",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.GetAppBaseInfoResp": {
+            "type": "object",
+            "properties": {
+                "hotRenewAddress": {
+                    "description": "热更新包地址",
+                    "type": "string"
+                },
+                "wechatAppId": {
+                    "description": "微信开放平台应用唯一标识",
+                    "type": "string"
+                },
+                "wechatSecretKey": {
+                    "description": "微信登陆应用密钥APPSecret",
+                    "type": "string"
+                }
+            }
+        },
+        "model.GetContinueGiftPackResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "description": "商品列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ContinueGiftPack"
+                    }
+                }
+            }
+        },
+        "model.GetFistRechargeGiftPackResp": {
+            "type": "object",
+            "properties": {
+                "goodsId": {
+                    "description": "礼包商品Id",
+                    "type": "string"
+                },
+                "isBuy": {
+                    "description": "是否已购买",
+                    "type": "boolean"
+                },
+                "items": {
+                    "description": "礼包物品列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/recharge.Item"
+                    }
+                }
+            }
+        },
+        "model.GetGatewayInfo": {
+            "type": "object",
+            "properties": {
+                "addr": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "svrId": {
+                    "type": "integer"
+                },
+                "svrType": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.GetGatewayResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.GetGatewayInfo"
+                    }
+                }
+            }
+        },
+        "model.GetHomeResp": {
+            "type": "object",
+            "properties": {
+                "guides": {
+                    "description": "首页引导提示列表(key：类型：1 商城；2 背包；3 活动；4 福利；5 直播；6 签到任务；7 对局任务；8 赢金任务；9 充值任务； value：提示数量)",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "user": {
+                    "description": "用户首页信息",
+                    "$ref": "#/definitions/model.HomeUser"
+                }
+            }
+        },
+        "model.GetInfoResp": {
+            "type": "object",
+            "properties": {
+                "avatarAddr": {
+                    "description": "头像地址",
+                    "type": "string"
+                },
+                "avatarFrame": {
+                    "description": "头像框",
+                    "type": "integer"
+                },
+                "diamond": {
+                    "description": "钻石数",
+                    "type": "string"
+                },
+                "gold": {
+                    "description": "金币数",
+                    "type": "string"
+                },
+                "goldBean": {
+                    "description": "金豆数",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "昵称",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "UID",
+                    "type": "integer"
+                },
+                "vip": {
+                    "description": "VIP等级",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.GetWalletResp": {
+            "type": "object",
+            "properties": {
+                "diamond": {
+                    "description": "钻石数",
+                    "type": "string"
+                },
+                "gold": {
+                    "description": "金币数",
+                    "type": "string"
+                },
+                "goldBean": {
+                    "description": "金豆数",
+                    "type": "string"
+                }
+            }
+        },
+        "model.HomeUser": {
+            "type": "object",
+            "properties": {
+                "avatarAddr": {
+                    "description": "头像地址",
+                    "type": "string"
+                },
+                "avatarFrame": {
+                    "description": "头像框",
+                    "type": "integer"
+                },
+                "diamond": {
+                    "description": "钻石数",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别：0 女；1 男；",
+                    "type": "integer"
+                },
+                "gold": {
+                    "description": "金币数",
+                    "type": "string"
+                },
+                "goldBean": {
+                    "description": "金豆数",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "昵称",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ItemData": {
+            "type": "object",
+            "properties": {
+                "adornmentType": {
+                    "description": "装扮物品类型：1 头部；2 衣服；",
+                    "type": "integer"
+                },
+                "content": {
+                    "description": "礼包、特权卡类道具内容",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/item.GiftPackContent"
+                    }
+                },
+                "extra": {
+                    "description": "扩展属性(攻击、复活等属性)",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "integer"
+                    }
+                },
+                "giftType": {
+                    "description": "礼包类型：0 未定义；1 充值礼包；2 钻石礼包；3 抽奖礼包；",
+                    "type": "integer"
+                },
+                "itemId": {
+                    "description": "物品ID",
+                    "type": "integer"
+                },
+                "itemType": {
+                    "description": "物品类型： 101 钻石；102 金币；103 金豆；201 装扮；202 武器 203 头像框；204 牌桌装饰品类；205 牌背装饰品类；206 入场动画类；207 交互道具类 301 特权包；302 礼包；",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "物品名称",
+                    "type": "string"
+                },
+                "serviceLife": {
+                    "description": "使用寿命（秒为单位）",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.LoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "telNumber"
+            ],
+            "properties": {
+                "password": {
+                    "description": "密码",
+                    "type": "string"
+                },
+                "telNumber": {
+                    "description": "手机号码",
+                    "type": "string"
+                }
+            }
+        },
+        "model.LoginResp": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "description": "token",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "user id",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.RoomInfo": {
+            "type": "object",
+            "properties": {
+                "baseScore": {
+                    "description": "底分",
+                    "type": "string"
+                },
+                "curPlayers": {
+                    "description": "当前房间玩家数量",
+                    "type": "integer"
+                },
+                "extra": {
+                    "description": "扩展玩法",
+                    "type": "string"
+                },
+                "gameId": {
+                    "description": "游戏ID",
+                    "type": "integer"
+                },
+                "gameType": {
+                    "description": "游戏类型：1 麻将；2 斗地主",
+                    "type": "integer"
+                },
+                "matchTime": {
+                    "description": "匹配最大时长(秒)",
+                    "type": "integer"
+                },
+                "maxLimit": {
+                    "description": "最大进场限制：0 代表不限制",
+                    "type": "string"
+                },
+                "maxMultiple": {
+                    "description": "最大倍数",
+                    "type": "integer"
+                },
+                "minLimit": {
+                    "description": "最小进场限制：0 代表不限制",
+                    "type": "string"
+                },
+                "roomId": {
+                    "description": "房间ID",
+                    "type": "integer"
+                },
+                "roomLevel": {
+                    "description": "房间级别：1 初级场；2 中级场；3 高级场；4 大师场；5 圣雀场；",
+                    "type": "integer"
+                },
+                "roomType": {
+                    "description": "房间类型：1 巅峰赛；2 教技场；3 比赛场；",
+                    "type": "integer"
+                },
+                "tags": {
+                    "description": "标签：1 最热；2 推荐；",
+                    "type": "string"
+                },
+                "ticket": {
+                    "description": "门票",
+                    "type": "string"
+                }
+            }
+        },
+        "model.RoomListReq": {
+            "type": "object",
+            "required": [
+                "gameId"
+            ],
+            "properties": {
+                "gameId": {
+                    "description": "游戏ID (游戏类型)",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.RoomListResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "description": "房间信息列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.RoomInfo"
+                    }
+                }
+            }
+        },
+        "model.SendSmsReq": {
+            "type": "object",
+            "required": [
+                "telNumber"
+            ],
+            "properties": {
+                "telNumber": {
+                    "description": "手机号",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "短信类型：1 注册；2 绑定手机号；3 修改密码",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.SendSmsResp": {
+            "type": "object",
+            "properties": {
+                "ttl": {
+                    "description": "过期时间(秒)",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.SyncDeviceReq": {
+            "type": "object",
+            "required": [
+                "deviceId"
+            ],
+            "properties": {
+                "androidInfo": {
+                    "description": "android 设备信息",
+                    "$ref": "#/definitions/model.AndroidInfo"
+                },
+                "brand": {
+                    "description": "品牌",
+                    "type": "string"
+                },
+                "deviceId": {
+                    "description": "设备ID",
+                    "type": "string"
+                },
+                "height": {
+                    "description": "高度",
+                    "type": "integer"
+                },
+                "iosUUID": {
+                    "description": "IOS设备ID",
+                    "type": "string"
+                },
+                "manufacturer": {
+                    "description": "制造商",
+                    "type": "string"
+                },
+                "model": {
+                    "description": "型号",
+                    "type": "string"
+                },
+                "organic": {
+                    "description": "organic 1 自然、2 广告",
+                    "type": "integer"
+                },
+                "os": {
+                    "description": "系统: 0 未知 1 安卓 2 IOS 3 其它",
+                    "type": "integer"
+                },
+                "version": {
+                    "description": "系统版本号",
+                    "type": "string"
+                },
+                "width": {
+                    "description": "宽度",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.SyncDeviceResp": {
+            "type": "object",
+            "properties": {
+                "deviceId": {
+                    "description": "设备Id",
+                    "type": "string"
+                }
+            }
+        },
+        "model.TakeContinueGiftPackReq": {
+            "type": "object",
+            "properties": {
+                "goodsId": {
+                    "description": "礼包商品Id",
+                    "type": "string"
+                },
+                "witchDay": {
+                    "description": "第几天领取",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.TakeContinueGiftPackResp": {
+            "type": "object",
+            "properties": {
+                "packItems": {
+                    "description": "礼包物品列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/recharge.Item"
+                    }
+                }
+            }
+        },
+        "model.TelRegisterReq": {
+            "type": "object",
+            "required": [
+                "SMSCode",
+                "password",
+                "telNumber"
+            ],
+            "properties": {
+                "SMSCode": {
+                    "description": "短信验证码",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "密码",
+                    "type": "string"
+                },
+                "telNumber": {
+                    "description": "手机号码",
+                    "type": "string"
+                }
+            }
+        },
+        "model.TelRegisterResp": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "description": "user id",
+                    "type": "integer"
+                }
+            }
+        },
+        "recharge.Item": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "description": "物品数量",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "物品ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "web.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

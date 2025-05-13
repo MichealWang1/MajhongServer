@@ -1,0 +1,129 @@
+# web监听端口
+httpPort: 10081
+
+# 内网服务
+services:
+  - {path: lobby, type: 5000, id: 1} # 大厅服务
+  - {path: center, type: 2000, id: 1} # 中心服务
+
+etcdEndpoints:
+  - 192.168.0.64:2379
+
+# 核心业务主库
+coreMaster:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_core
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: CoreMaster
+
+# 核心业务从库
+coreSlave:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_core
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: CoreSlave
+
+# 日志主库
+loggerMaster:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_logger
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: LoggerMaster
+
+# 日志从库
+loggerSlave:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_logger
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: LoggerSlave
+
+# 业务报表主库(business owner)
+reportMaster:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_report
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: ReportMaster
+
+# 业务报表从库(business owner)
+reportSlave:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_report
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: ReportSlave
+
+# 游戏记录主库
+gameMaster:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_game
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: GameMaster
+
+# 游戏记录从库
+gameSlave:
+  host: 192.168.0.64
+  port: 3306
+  user: root
+  pwd: 123456
+  schema: kxmj_game
+  maxIdleConn: 10
+  maxOpenConn: 100
+  name: GameSlave
+  
+# redis
+redis:
+  addr: 192.168.0.64:6379
+  password: 123456
+
+# mq服务
+mqConfig:
+  addr: 192.168.0.64
+  port: 5672
+  user: admin
+  password: 123456
+
+# 日志配置
+logger:
+  path: ./logs
+  prefix: email   # 日志文件前缀
+  level: debug    # 日志级别：debug/info/error/warn
+  development: true  # 是否为开发者模式
+  debugFileSuffix: debug.log  # debug日志文件后缀
+  warnFileSuffix: warn.log    # warn日志文件后缀
+  errorFileSuffix: error.log   # error日志文件后缀
+  infoFileSuffix: info.log    # info日志文件后缀
+  maxAge: 7        # 保存的最大天数
+  maxBackups: 100  # 最多存在多少个切片文件
+  maxSize: 10  # 日日志文件大小（M）
+
+useSwagger: yes
+
+# 运行模式 /release/develop
+runMode: "develop"

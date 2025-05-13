@@ -1,0 +1,1 @@
+pidof kxmj-gm | xargs kill -SIGINT

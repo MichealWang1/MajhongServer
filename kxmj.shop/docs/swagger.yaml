@@ -1,0 +1,169 @@
+basePath: /shop/v1
+definitions:
+  model.BuyReq:
+    properties:
+      goodsId:
+        description: 商品ID
+        type: string
+      type:
+        description: 支付类型：1 微信支付；2 支付宝支付；
+        type: integer
+    type: object
+  model.BuyResp:
+    properties:
+      orderId:
+        description: 订单号
+        type: string
+      payUrl:
+        description: 支付地址 (销售方式：1 RMB购买 有值)
+        type: string
+    type: object
+  model.GoodsData:
+    properties:
+      category:
+        description: 商品分类：0 不显示菜单；1 钻石；2 金币；3 装扮；
+        type: integer
+      categoryName:
+        description: 商品分类名称
+        type: string
+      expireTime:
+        description: 过期时间：0 永不过期
+        type: integer
+      firstBuyDouble:
+        description: 首购翻倍：1 是；2 否
+        type: integer
+      goodsId:
+        description: 商品ID
+        type: string
+      incomeTimes:
+        description: 收益倍数
+        type: string
+      itemId:
+        description: 物品ID
+        type: integer
+      name:
+        description: 商品名称
+        type: string
+      originalCount:
+        description: 原来获得数量
+        type: string
+      originalPrice:
+        description: 原价
+        type: string
+      price:
+        description: 价格
+        type: string
+      realCount:
+        description: 实际获得数量
+        type: string
+      recommend:
+        description: 推荐商品：1 是；2 否；
+        type: integer
+      rewardAdded:
+        description: 加赠数量
+        type: string
+      shopType:
+        description: 销售方式：1 RMB购买；2 钻石购买；3 金币购买
+        type: integer
+    type: object
+  model.GoodsListResp:
+    properties:
+      list:
+        description: 商品列表
+        items:
+          $ref: '#/definitions/model.GoodsData'
+        type: array
+    type: object
+  web.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: shop 服务接口
+  title: shop 服务接口
+  version: "1.0"
+paths:
+  /goods/buy:
+    post:
+      description: GOODS
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.BuyReq'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.BuyResp'
+              type: object
+      summary: 商品购买
+      tags:
+      - GOODS
+  /goods/goods-list:
+    get:
+      description: GOODS
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.GoodsListResp'
+              type: object
+      summary: 获取商品列表
+      tags:
+      - GOODS
+schemes:
+- http
+- https
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

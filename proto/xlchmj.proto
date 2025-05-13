@@ -1,0 +1,472 @@
+syntax = "proto3";
+
+package mj_xlch;
+option go_package = "/pb";
+option csharp_namespace = "pb.mj_xlch";
+
+enum MID {
+  INVALID = 0;                                // 无效消息
+  PLAYER_ENTER_INFO_NOTIFY = 10001;           // 玩家进入信息 GamePlayerEnterInfoNotify
+  DESK_INFO = 10002;                          // 请求桌子信息 (GameDeskInfoRequest,GameDeskInfoResponse)
+  PLAYER_READY = 10003;                       // 准备 (GamePlayerReadyRequest，GamePlayerReadyResponse)
+  GAME_START = 10004;                         // 游戏开始 GameStartNotify
+  GAME_STATE = 10005;                         // 游戏状态 GameStateNotify
+  DEAL_HAND_CARDS_NOTIFY = 10006;             // 广播发牌 GameDealHandCardsNotify
+  UPDATE_PLAYER_CARDS_DETAIL_NOTIFY = 10007;  // 更新手牌 GameUpdateMahjongResponse
+  CATCH_CARD_NOTIFY = 10008;                  // 玩家抓牌 GamePlayerCatchCard
+  SWAP_NOTIFY = 10009;                        // 通知玩家换牌 GamePlayerSwapNotify
+  SWAP_INFO = 10010;                          // 玩家换牌 (GamePlayerSwapRequest,GamePlayerSwapResponse)
+  SWAP_RESULT_NOTIFY = 10012;                 // 换牌类型 GameSwapResultNotify
+  CHOOSE_MISS_NOTIFY = 10013;                 // 通知玩家选缺 GamePlayerChooseMissNotify
+  CHOOSE_MISS_INFO = 10014;                   // 玩家选缺 (GamePlayerChooseMissRequest,GamePlayerChooseMissResponse)
+  CHOOSE_MISS_RESULT_NOTIFY = 10016;          // 玩家选缺结束通知 GamePlayerChooseMissResultNotify
+  OUT_CARD_NOTIFY = 10017;                    // 通知玩家出牌 GamePlayerOutCardNotify
+  OUT_CARD_INFO = 10018;                      // 玩家出牌请求 (GamePlayerOutCardRequest,GamePlayerOutCardResponse)
+  ACTIONS_NOTIFY = 10020;                     // 通知玩家处理动作 GamePlayerActionNotify
+  ACTIONS_INFO = 10021;                       // 玩家处理动作 (GamePlayerActionRequest,GamePlayerActionResponse)
+  TING_3N2_NOTIFY = 10022;                    // 3n+2听牌提示 GameTing3N2InfoNotify
+  TING_3N1_NOTIFY = 10023;                    // 3n+1听牌提示 GameTing3N1InfoNotify
+  PLAYER_PAYMENT_INFO = 19992;                // 玩家支付请求 GamePaymentRequest
+  UPDATE_GOLD_NUMBER = 19993;                 // 更新玩家金币 GameUpdateGoldNumberNotify
+  PLAYER_AUTO_INFO = 19994;                   // 玩家自动请求（托管、自动胡） (GamePlayerAutoRequest,GamePlayerAutoResponse)
+  PLAYER_STATUS = 19996;                      // 广播玩家游戏内状态; GamePlayerStatusResponse
+  ERROR_MESSAGE = 19997;                      // 错误响应 GameErrorResponse
+  SETTLEMENT_BUREAU = 19998;                  // 局内结算 GameBureauSettlement
+  SETTLEMENT_END = 19999;                     // 游戏结束结算 GameEndSettlement
+
+  FORCE_END = 20001;  // 强制结束ForceEnd (GameForceEndRequest,GameForceEndResponse)
+  SET_GOLD  = 20002; // 设置玩家金币数 GameSetPlayerGoldRequest
+}
+
+enum GameState {
+  UNKNOWN = 0;          // 未知状态
+  MATCH = 1;            // 匹配状态
+  READY = 2;            // 准备状态
+  DICE = 3;             // 掷骰子状态
+  DEAL_HAND_CARDS = 4;  // 发牌状态
+  SWAP = 5;             // 换牌状态
+  CHOOSE_MISS = 6;      // 选缺状态
+  PLAY = 7;             // 游戏状态
+  OPERATE = 8;          // 动作操作状态
+  SETTLEMENT = 9;       // 结算状态
+  END = 10;             // 结束状态
+  PAUSE = 11;           // 暂停状态
+  RISE = 12;            // 复活状态
+}
+
+// 玩家信息结构体
+message PlayerInfo {
+  uint32 seat_id = 1;      // 座位号
+  uint32 user_id = 2;      // 用户ID
+  string gold = 3;         // 金豆
+  string nickname = 4;     // 昵称
+  string avatar_addr = 5;  // 头像
+  uint32 icon_style = 6;   // 装饰
+  bool is_online = 7;      // 是否在线
+
+  CardsInfo cards = 8;                              // 玩家牌信息
+  bool swap_status = 9;                             // 换三张信息
+  repeated uint32 swap_default_cards = 11;          // 默认换的三张牌
+  MissType choose_miss_status = 12;                 // 选缺状态
+  repeated MahjongAction operational_actions = 13;  // 玩家可操作动作
+  bool host_status = 14;                            // 托管状态
+  PlayerStatus player_status = 15;                  // 玩家状态
+}
+
+// 牌信息
+message CardsInfo {
+  repeated uint32 hand_cards = 1;      // 手牌信息
+  uint32 hand_count = 2;               // 手牌数量
+  uint32 op_card = 3;                  // 摸得牌，没有为255
+  repeated MahjongAction actions = 4;  // 动作牌信息
+  repeated HuResult hu_result = 5;     // 胡牌信息
+  repeated uint32 discards = 6;        // 弃牌堆信息
+}
+
+// 玩家状态
+enum PlayerStatus {
+  PLAYER_UNKNOWN = 0;  // 未知状态
+  NORMAL = 1;          // 正常状态（可进行摸打胡）
+  Hu = 2;              // 胡牌状态（不能自己出牌）
+  REVIVE = 3;          // 复活状态（玩家破产选择复活）
+  PAY = 4;             // 支付状态（复活选择支付玩家状态）
+  DEFEAT = 5;          // 失败状态(玩家破产时选择不复活)
+}
+
+// 请求桌子玩家信息
+message GameDeskInfoRequest {
+  uint32 user_id = 1;  // 用户ID
+}
+
+// 广播玩家进入信息
+message GamePlayerEnterInfoNotify {
+  PlayerInfo player = 1;  // 进入玩家信息
+}
+
+// 广播桌子信息
+message GameDeskInfoResponse {
+  repeated PlayerInfo player = 1;
+  GameState state = 2;        // 桌子状态
+  uint32 operate_seat = 3;    // 操作位子
+  uint32 duration = 4;        // 操作时间
+  uint32 stack_count = 5;     // 牌堆数量信息
+  uint32 banker_seat_id = 6;  // 庄家位子
+}
+
+// ----------------------准备----------------------
+message GamePlayerReadyRequest {}
+
+message GamePlayerReadyResponse {
+  repeated bool state = 1;  // 各个位子是否准备
+}
+
+// 通知游戏开始
+message GameStartNotify {
+  uint32 banker_seat_id = 1;  // 庄家位子
+}
+
+// 广播游戏状态
+// message GameStateNotify {
+//  GameState state = 1;
+//}
+
+// -----------------------发牌状态------------------------
+message HandCardsInfo {
+  repeated uint32 hand_cards = 1;  // 玩家手牌信息
+  uint32 catch_card = 2;           // 玩家抓的牌255
+  uint32 count = 3;                // 玩家手牌数量
+}
+
+message GameDealHandCardsNotify {
+  uint32 seat_id = 1;                          // 座位号
+  repeated HandCardsInfo hand_cards_info = 2;  // 各个玩家手牌信息
+  uint32 stack_count = 3;                      // 牌堆数量
+}
+
+// ------------------------------------------------
+
+// 更新手牌类型
+enum UpdateMahjongType {
+  UPDATE_INVALID = 0;         // 未知更新
+  UPDATE_DEAL_HAND_CARD = 1;  // 发牌更新
+  UPDATE_SWAP = 2;            // 换牌更新
+  UPDATE_CATCH = 3;           // 抓牌更新
+  UPDATE_OUT_CARD = 4;        // 出牌更新
+  UPDATE_ACTION = 5;          // 吃碰杠更新
+  UPDATE_ERROR = 6;           // 错误更新
+}
+
+// 动作类型
+enum ActionType {
+  ACTION_INVALID = 0;  // 未知操作
+  ACTION_PASS = 1;     // 过操作
+  ACTION_CHI = 2;      // 吃操作
+  ACTION_PENG = 3;     // 碰操作
+  ACTION_GANG = 4;     // 杠操作
+  ACTION_HU = 5;       // 胡操作
+  ACTION_TING = 6;     // 听操作
+}
+
+enum ActionExtType {
+  ACTION_EXT_NULL = 0;  // 空操作
+  ACTION_EXT_MING = 1;  // 明杠
+  ACTION_EXT_BU = 2;    // 补杠
+  ACTION_EXT_AN = 3;    // 暗杠
+}
+
+// 麻将吃碰杠胡动作结构体
+message MahjongAction {
+  uint32 out_seat_id = 1;             // 出牌座位
+  ActionType action_type = 2;         // 动作类型
+  ActionExtType extension_type = 3;   // 额外动作
+  uint32 op_card = 4;                 // 操作牌
+  repeated uint32 delete_cards = 5;   // 手牌中删除的牌
+  repeated uint32 combine_cards = 6;  // 组合牌
+  string hu_multiple = 7;             // 胡牌倍数(只有胡才会显示)
+}
+
+// 广播玩家手牌信息(发牌，吃碰杠牌)
+message GameUpdateMahjongResponse {
+  uint32 seat_id = 1;                  // 玩家座位号
+  repeated uint32 hand_card = 2;       // 玩家手牌
+  uint32 op_card = 3;                  // 操作牌(摸的牌,无的话为0xff)
+  UpdateMahjongType update_type = 4;   // 更新类型
+  repeated MahjongAction actions = 5;  // 玩家的动作
+  uint32 count = 6;                    // 玩家牌数量
+  repeated uint32 discard = 7;         // 弃牌堆
+  repeated HuResult hu_result = 8;     // 胡牌数据
+}
+
+// -------------------换三张---------------------
+// 通知玩家进行换牌选择
+message GamePlayerSwapNotify {
+  uint32 seat_id = 1;                 // 玩家座位号
+  uint32 duration = 2;                // 操作时间
+  repeated uint32 default_cards = 3;  // 默认换的三张牌
+}
+
+// 玩家换牌请求
+message GamePlayerSwapRequest {
+  uint32 seat_id = 1;         // 玩家座位号
+  repeated uint32 cards = 2;  // 要换的牌
+}
+
+// 玩家换牌响应
+message GamePlayerSwapResponse {
+  uint32 seat_id = 1;              // 换牌玩家
+  repeated uint32 swap_cards = 2;  // 选择的牌
+}
+
+// 换三张类型枚举
+enum SwapType {
+  SWAP_TYPE_INVALID = 0;   // 未知
+  SWAP_TYPE_NEXT = 1;      // 下家
+  SWAP_TYPE_PREV = 2;      // 上家
+  SWAP_TYPE_OPPOSITE = 3;  // 对家
+}
+
+// 通知客户端换三张类型
+message GameSwapResultNotify {
+  SwapType swap_type = 1;          // 交换类型
+  repeated uint32 swap_cards = 2;  // 玩家手牌信息
+}
+
+// --------------------选缺-----------------------
+// 通知玩家进行选缺
+message GamePlayerChooseMissNotify {
+  uint32 seat_id = 1;   // 玩家座位号
+  uint32 duration = 2;  // 操作时间
+}
+
+// 选缺类型
+enum MissType {
+  MISS_WAN = 0;     // 万
+  MISS_TIAO = 16;   // 条
+  MISS_TONG = 32;   // 筒
+  MISS_NULL = 255;  // 没有操作
+}
+
+// 玩家选缺请求
+message GamePlayerChooseMissRequest {
+  uint32 seat_id = 1;      // 玩家座位号
+  MissType miss_type = 2;  // 选缺类型
+}
+
+// 选缺响应
+message GamePlayerChooseMissResponse {
+  repeated bool status = 1;  // 所有玩家的选择状态
+}
+
+// 广播选缺结果
+message GamePlayerChooseMissResultNotify {
+  repeated MissType miss_type = 1;  // 所有玩家的选择状态
+}
+
+// --------------------玩家摸牌---------------------------
+// 玩家抓牌
+message GamePlayerCatchCard {
+  uint32 seat_id = 1;     // 玩家座位号
+  uint32 card = 2;        // 抓的牌
+  uint32 left_count = 3;  // 牌堆剩余数量
+}
+
+// ------------------------玩家出牌-----------------------
+// 通知玩家出牌
+message GamePlayerOutCardNotify {
+  uint32 seat_id = 1;   // 玩家座位号
+  uint32 duration = 2;  // 操作时间
+}
+
+// 玩家出牌请求
+message GamePlayerOutCardRequest {
+  uint32 seat_id = 1;  // 玩家座位号
+  uint32 card = 2;     // 玩家出牌
+  bool is_auto = 3;    // 是否自动出牌（客户端不需要处理）
+  uint32 index = 4;    // 出牌位子
+}
+
+// 玩家出牌响应
+message GamePlayerOutCardResponse {
+  uint32 seat_id = 1;  // 玩家座位号
+  uint32 card = 2;     // 玩家出牌
+  uint32 index = 3;    // 出牌位子
+}
+
+// -------------提示玩家处理动作--------------
+// 通知玩家处理动作
+message GamePlayerActionNotify {
+  uint32 seat_id = 1;                  // 玩家座位号
+  repeated MahjongAction actions = 3;  // 玩家可操作动作
+  uint32 duration = 2;                 // 操作时间
+}
+
+// 玩家处理动作请求
+message GamePlayerActionRequest {
+  uint32 seat_id = 1;        // 玩家座位号
+  MahjongAction action = 2;  // 玩家选择的动作
+  bool is_auto = 3;          // 是否自动出牌（客户端不需要处理）
+}
+
+// 玩家处理动作响应
+message GamePlayerActionResultResponse {
+  uint32 seat_id = 1;        // 玩家座位号
+  MahjongAction action = 2;  // 玩家选择的动作
+}
+
+// -------------------玩家自身状态（托管/自动胡/胡牌）----------------------
+
+enum AutoType {
+  TYPE_INVALID = 0;  // 未知类型
+  TYPE_HOST = 1;     // 托管类型
+  TYPE_AUTO_HU = 2;  // 自动胡
+}
+
+// 玩家请求托管
+message GamePlayerAutoRequest {
+  uint32 seat_id = 1;  // 托管位子
+  AutoType type = 2;   // 类型
+  bool is_host = 3;    // true:选择;false:取消
+}
+
+// 所有玩家的托管状态
+message GamePlayerAutoResponse {
+  repeated bool is_host = 1;     // 玩家托管状态 true:托管、false:没有托管
+  repeated bool is_auto_hu = 2;  // 玩家自动胡状态
+}
+
+// 玩家游戏过程中的状态信息
+message GamePlayerStatusResponse {
+  repeated PlayerStatus state = 1;  // 所有玩家的状态（默认是正常）
+}
+
+// ---------------------------胡牌数据----------------------------
+message HuResult {
+  uint32 out_seat_id = 1;           // 出牌玩家
+  uint32 hu_card = 2;               // 胡的牌
+  repeated uint32 hu_position = 3;  // 胡牌类型
+  string multiple = 4;              // 胡牌倍数
+}
+
+// ---------------------------结算-------------------------------
+
+// 胡牌信息
+message HuInfo {
+  repeated uint32 hand_cards = 1;      // 手牌
+  uint32 hu_card = 2;                  // 胡的牌
+  repeated MahjongAction actions = 3;  // 动作牌
+  repeated uint32 hu_position = 4;     // 胡牌类型
+}
+
+// 结算类型
+enum SettlementType {
+  SETTLEMENT_INVALID = 0;  // 无效类型
+  HU = 1;                  // 胡类型
+  MING_GANG = 2;           // 明杠
+  BU_GANG = 3;             // 补杠
+  AN_GANG = 4;             // 暗杠
+  ZHUANG_YI = 5;           // 转移(杠炮后没有一炮多响则把上次杠的分收下)
+  TUI_SHUI = 6;            // 退税
+  CHA_DA_JIAO = 7;         // 查大叫
+  CHA_HUA_ZHU = 8;         // 查花猪
+}
+
+// 局内结算
+message BureauSettlementInfo {
+  uint32 win_seat_id = 1;              // 赢分位子
+  SettlementType settlement_type = 2;  // 结算类型
+  uint32 op_card = 3;                  // 操作牌
+  HuInfo hu_cards_info = 4;            // 胡牌时手牌信息(杠则没有信息)
+  repeated string inning_scores = 5;   // 所有人的输赢分数(理论值)
+  repeated string reality_scores = 6;  // 所有人的实际输赢金币(实际值)
+  string multiple = 8;                 // 倍数
+  bool is_ceiling = 9;                 // 是否封顶
+  repeated bool is_bankruptcy = 10;    // 是否破产
+}
+
+message GameBureauSettlementNotify {
+  repeated BureauSettlementInfo data = 1;  // 结算分数
+  repeated string gold = 2;                // 各个玩家携带金币数量
+}
+
+// 单个玩家结算信息
+message GameEndPersonalSettlementInfo {
+  repeated uint32 hand_cards = 1;      // 所有玩家手牌信息
+  repeated uint32 discards = 2;        // 所有玩家弃牌信息
+  repeated MahjongAction actions = 3;  // 所有玩家吃碰杠信息
+  repeated HuResult hu_result = 4;     // 胡牌数据
+  string total_scores = 5;             // 玩家总得分
+  string gold = 6;                     // 玩家金币数量
+}
+
+enum EndType {
+  UNKNOWN_END = 0;   // 未知结算
+  NORMAL_END = 1;    // 正常结束
+  ABNORMAL_END = 2;  // 非正常结束
+  DRAW_END = 3;      // 流局结束
+}
+
+// 结束结算
+message GameEndSettlementNotify {
+  EndType end_type = 1;                                  // 结束类型
+  repeated GameEndPersonalSettlementInfo data = 2;       // 结算分数
+  repeated BureauSettlementInfo bureau_settlements = 3;  // 玩家局内结算信息
+}
+
+// -------------------------更新玩家金币数------------------------
+message GameUpdateGoldNumberNotify {
+  repeated string gold = 1;  // 各个玩家携带金币数量
+}
+
+// ---------------------------错误-------------------------------
+// 错误响应
+message GameErrorResponse {
+  uint32 code = 1;  // 错误码
+  string msg = 2;   // 错误描述
+}
+
+// --------------------------听牌---------------------------------
+
+message TingCard {
+  uint32 card = 1;      // 牌
+  uint32 count = 2;     // 牌数量
+  string multiple = 3;  // 倍数
+}
+
+message TingCardInfo {
+  uint32 out_card = 1;              // 出哪张牌
+  repeated TingCard ting_card = 2;  // 听哪些牌
+}
+
+// 3n+2手牌听牌提示
+message GameTing3N2InfoNotify {
+  repeated TingCardInfo ting_cards = 2;  // 听哪些牌
+}
+
+// 3n+1手牌听牌提示
+message GameTing3N1InfoNotify {
+  repeated TingCard ting_card = 2;  // 听哪些牌
+}
+
+// 听牌请求
+// message GameTingCardsRequest {
+//  uint32 seat_id = 1; // 听牌位子
+//}
+
+// -----------------------------玩家支付----------------------------
+message GamePaymentRequest {
+  uint32 seat_id = 1;  // 位子
+}
+
+// ------------------------------强制退出----------------------------
+// 调试用..............................
+
+message GameForceEndRequest {}
+
+message GameForceEndResponse {}
+
+message GameSetPlayerGoldRequest{
+  uint32 seat_id = 1; // 玩家座位号
+  string gold = 2; // 玩家金币数
+}
+
+// -------------------------------------------------------------------------

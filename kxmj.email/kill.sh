@@ -1,0 +1,1 @@
+pidof kxmj-email | xargs kill -SIGINT

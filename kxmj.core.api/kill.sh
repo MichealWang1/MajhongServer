@@ -1,0 +1,1 @@
+pidof kxmj-core-api | xargs kill -SIGINT

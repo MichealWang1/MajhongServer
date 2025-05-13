@@ -1,0 +1,483 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "gm 服务接口",
+        "title": "gm 服务接口",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/gm/v1",
+    "paths": {
+        "/gm-del-card-stack": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "删除配置牌堆",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.DeleteCardStack"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gm-set-card-stack": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "配置牌堆和庄家",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CardStack"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gm-set-catch-card": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "配下一张摸牌",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.CatchCard"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gm-set-dismiss-room": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "GM解散房间功能",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gm-set-match-player": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "调整匹配时 匹配的玩家",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MatchPlayerType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gm-set-pause-room": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "暂停房间",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/gm-set-resume-room": {
+            "post": {
+                "description": "GM",
+                "tags": [
+                    "GM"
+                ],
+                "summary": "恢复房间(暂停恢复)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "dev.kxmj.com",
+                        "name": "BundleId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "0033-0000-9999-9999-9999-1111",
+                        "name": "DeviceId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "JSON",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UserInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "请求成功",
+                        "schema": {
+                            "$ref": "#/definitions/web.Response"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.CardStack": {
+            "type": "object",
+            "properties": {
+                "banker": {
+                    "description": "庄家 自己则是UserID对应的玩家 1自己 2下家 3对家 4上家",
+                    "type": "integer"
+                },
+                "cards": {
+                    "description": "配牌库 万(1-9) 条(17-25) 筒(33-41)",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "gameType": {
+                    "description": "游戏场次",
+                    "type": "integer"
+                },
+                "roomType": {
+                    "description": "房间类型",
+                    "type": "integer"
+                },
+                "userId": {
+                    "description": "玩家ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.CatchCard": {
+            "type": "object",
+            "properties": {
+                "card": {
+                    "description": "牌 万(1-9) 条(17-25) 筒(33-41)",
+                    "type": "integer"
+                },
+                "gameType": {
+                    "description": "游戏场次",
+                    "type": "integer"
+                },
+                "roomType": {
+                    "description": "房间类型",
+                    "type": "integer"
+                },
+                "userId": {
+                    "description": "玩家ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.DeleteCardStack": {
+            "type": "object",
+            "properties": {
+                "gameType": {
+                    "description": "游戏场次",
+                    "type": "integer"
+                },
+                "roomType": {
+                    "description": "房间类型",
+                    "type": "integer"
+                },
+                "userId": {
+                    "description": "玩家ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.MatchPlayerType": {
+            "type": "object",
+            "properties": {
+                "gameType": {
+                    "description": "游戏场次",
+                    "type": "integer"
+                },
+                "matchTime": {
+                    "description": "匹配时间",
+                    "type": "integer"
+                },
+                "matchType": {
+                    "description": "匹配类型 没选择的或者默认的填0即可",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "roomType": {
+                    "description": "房间类型",
+                    "type": "integer"
+                },
+                "userId": {
+                    "description": "玩家ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "model.UserInfo": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "description": "玩家ID",
+                    "type": "integer"
+                }
+            }
+        },
+        "web.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
+                "msg": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

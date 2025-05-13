@@ -1,0 +1,1 @@
+pidof kxmj-gateway | xargs kill -SIGINT

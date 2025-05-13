@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package lobby;
+option go_package = "/lobby_pb";
+
+enum MID {
+  INVALID = 0;               // 无效消息
+  PAUSE_GAME = 801;          // 暂停游戏
+  CONTINUE_GAME = 802;       // 继续游戏
+  REGISTER = 899;            // 服务注册
+  UNREGISTER = 900;          // 取消注册
+  ON_LINE = 901;             // 用户上线 Online
+  OFF_LINE = 902;            // 用户下线 Offline
+  ENTER_DESK = 903;          // 进入桌子 EnterDesk
+  LEAVE_DESK = 904;          // 离开桌子 LeaveDesk
+  RISE_BUY_SUCCESS = 905;    // 复活卡购买成功 RiseBuySuccess
+}
+
+message PauseGame{
+  uint32 user_id = 1; // 用户ID
+}
+
+message ContinueGame{
+  uint32 user_id = 1; // 用户ID
+}
+
+// 服务注册
+message Register {
+  uint32 svr_type = 1;  // 服务类型
+  uint32 svr_id = 2;    // 服务Id
+  string addr = 3;      // 服务监听IP
+  uint32 port = 4;      // 服务监听端口
+}
+
+// 取消注册
+message UnRegister {
+  uint32 svr_type = 1;  // 服务类型
+  uint32 svr_id = 2;    // 服务Id
+}
+
+// 用户上线
+message Online {
+  uint32 user_id = 1;  // 玩家ID
+  uint32 svr_type = 2;  // 服务类型
+  uint32 svr_id = 3;    // 服务Id
+}
+
+// 用户下线
+message Offline {
+  uint32 user_id = 1;  // 玩家ID
+  uint32 svr_type = 2;  // 服务类型
+  uint32 svr_id = 3;    // 服务Id
+}
+
+// 进入桌子
+message EnterDesk {
+  uint32 user_id = 1;     // 玩家ID
+  uint32 svr_type = 2;    // 游戏类型
+  uint32 svr_id = 3;      // 服务ID
+  uint32 room_id = 4;     // 房间号
+  uint32 desk_id = 5;     // 桌号
+}
+
+// 离开桌子
+message LeaveDesk {
+  uint32 user_id = 1;     // 玩家ID
+  uint32 svr_type = 2;    // 游戏类型
+  uint32 svr_id = 3;      // 服务ID
+  uint32 room_id = 4;     // 房间号
+  uint32 desk_id = 5;     // 桌号
+}
+
+// 复活卡购买成功
+message RiseBuySuccess{}

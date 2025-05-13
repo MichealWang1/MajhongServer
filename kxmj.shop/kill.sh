@@ -1,0 +1,1 @@
+pidof kxmj-shop | xargs kill -SIGINT

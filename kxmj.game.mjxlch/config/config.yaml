@@ -1,0 +1,48 @@
+# 当前服务
+self:
+  path: mjxlch      # 服务路由
+  type: 50001       # 服务类型
+  id: 1            # 服务ID
+  addr: 127.0.0.1  # IP地址
+  port: 51001       # 端口号
+
+etcdEndpoints:
+  - 192.168.0.64:2379
+
+# 大厅服务
+lobby:
+  path: lobby      # 服务路由
+  type: 5000       # 服务类型
+  id: 1            # 服务ID
+
+# 中心服务
+center:
+  path: center    # 服务路由
+  type: 2000       # 服务类型
+  id: 1            # 服务ID
+
+# redis
+redis:
+  addr: 192.168.0.64:6379
+  password: 123456
+
+# mq服务
+mqConfig:
+  addr: 192.168.0.64
+  port: 5672
+  user: admin
+  password: 123456
+
+# 日志配置
+logger:
+  path: ./logs
+  prefix: game-mjxlch   # 日志文件前缀
+  level: debug          # 日志级别：debug/info/error/warn
+  development: true     # 是否为开发者模式
+  debugFileSuffix: debug.log  # debug日志文件后缀
+  warnFileSuffix: warn.log    # warn日志文件后缀
+  errorFileSuffix: error.log   # error日志文件后缀
+  infoFileSuffix: info.log    # info日志文件后缀
+  maxAge: 7        # 保存的最大天数
+  maxBackups: 100  # 最多存在多少个切片文件
+  maxSize: 10  # 日日志文件大小（M）

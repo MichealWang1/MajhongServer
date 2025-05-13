@@ -1,0 +1,1 @@
+pidof kxmj-center | xargs kill -SIGINT

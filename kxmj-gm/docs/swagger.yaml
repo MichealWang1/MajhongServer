@@ -1,0 +1,329 @@
+basePath: /gm/v1
+definitions:
+  model.CardStack:
+    properties:
+      banker:
+        description: 庄家 自己则是UserID对应的玩家 1自己 2下家 3对家 4上家
+        type: integer
+      cards:
+        description: 配牌库 万(1-9) 条(17-25) 筒(33-41)
+        items:
+          type: integer
+        type: array
+      gameType:
+        description: 游戏场次
+        type: integer
+      roomType:
+        description: 房间类型
+        type: integer
+      userId:
+        description: 玩家ID
+        type: integer
+    type: object
+  model.CatchCard:
+    properties:
+      card:
+        description: 牌 万(1-9) 条(17-25) 筒(33-41)
+        type: integer
+      gameType:
+        description: 游戏场次
+        type: integer
+      roomType:
+        description: 房间类型
+        type: integer
+      userId:
+        description: 玩家ID
+        type: integer
+    type: object
+  model.DeleteCardStack:
+    properties:
+      gameType:
+        description: 游戏场次
+        type: integer
+      roomType:
+        description: 房间类型
+        type: integer
+      userId:
+        description: 玩家ID
+        type: integer
+    type: object
+  model.MatchPlayerType:
+    properties:
+      gameType:
+        description: 游戏场次
+        type: integer
+      matchTime:
+        description: 匹配时间
+        type: integer
+      matchType:
+        description: 匹配类型 没选择的或者默认的填0即可
+        items:
+          type: integer
+        type: array
+      roomType:
+        description: 房间类型
+        type: integer
+      userId:
+        description: 玩家ID
+        type: integer
+    type: object
+  model.UserInfo:
+    properties:
+      userId:
+        description: 玩家ID
+        type: integer
+    type: object
+  web.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: gm 服务接口
+  title: gm 服务接口
+  version: "1.0"
+paths:
+  /gm-del-card-stack:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.DeleteCardStack'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: 删除配置牌堆
+      tags:
+      - GM
+  /gm-set-card-stack:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CardStack'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: 配置牌堆和庄家
+      tags:
+      - GM
+  /gm-set-catch-card:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CatchCard'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: 配下一张摸牌
+      tags:
+      - GM
+  /gm-set-dismiss-room:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInfo'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: GM解散房间功能
+      tags:
+      - GM
+  /gm-set-match-player:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.MatchPlayerType'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: 调整匹配时 匹配的玩家
+      tags:
+      - GM
+  /gm-set-pause-room:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInfo'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: 暂停房间
+      tags:
+      - GM
+  /gm-set-resume-room:
+    post:
+      description: GM
+      parameters:
+      - description: dev.kxmj.com
+        in: header
+        name: BundleId
+        required: true
+        type: string
+      - description: 0033-0000-9999-9999-9999-1111
+        in: header
+        name: DeviceId
+        required: true
+        type: string
+      - description: 9cb9aaf4e28d5094fbca383255ecbafbbabb95c40c758843054480391f448ee8
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: JSON
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserInfo'
+      responses:
+        "200":
+          description: 请求成功
+          schema:
+            $ref: '#/definitions/web.Response'
+      summary: 恢复房间(暂停恢复)
+      tags:
+      - GM
+schemes:
+- http
+- https
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,1 @@
+pidof kxmj-lobby | xargs kill -SIGINT

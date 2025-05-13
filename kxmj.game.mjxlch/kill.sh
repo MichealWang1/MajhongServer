@@ -1,0 +1,1 @@
+pidof kxmj-game-mjxlch | xargs kill -SIGINT

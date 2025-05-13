@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package gateway;
+option go_package = "/gateway_pb";
+option csharp_namespace = "pb";
+
+enum MID {
+  INVALID = 0;             // 无效消息
+  LOGIN = 1;               // 登录请求 (LoginReq,LoginRsp)(网关svrType=1000)
+  PING = 2;                // ping pong (Ping, Pong)(网关svrType=1000)
+  MATCH = 3;               // 游戏匹配 (MatchReq, MatchResp)(游戏内消息，svrType随游戏变化)
+  LEAVE_DESK = 4;          // 离开桌子 (Empty, LeaveDesk)(游戏内消息，svrType随游戏变化)
+  LOCATION = 5;            // 位置消息 (Empty,Location)(大厅消息svrType=5000)
+  SHOPPING_SUCCESS = 888;  // 购买成功通知(ShoppingSuccess)(大厅消息svrType=5000)
+  NOTIFY_RISE = 889;       // 通知复活(NotifyRise)(游戏内消息，svrType随游戏变化)
+  GIVE_UP_RISE = 890;      // 放弃复活(GiveUpRiseReq, GiveUpRiseResp)(游戏内消息，svrType随游戏变化)
+  ERR = 999;               // 错误消息(Err)(全局消息，svrType随客户端请求变化)
+}
+
+// 空内容
+message Empty {}
+
+// 登录请求
+message LoginReq {
+  uint32 user_id = 1;  // UID
+  string token = 2;    // Token
+}
+
+// 登录返回
+message LoginResp {
+  uint32 code = 1;     // 1 成功; 其他 错误
+  uint32 user_id = 2;  // 玩家ID
+}
+
+message Ping {
+  uint64 client_time = 1;  // 客户端时间(可用户计算网络延迟)
+}
+
+message Pong {
+  uint64 client_time = 1;  // 客户端时间(可用户计算网络延迟)
+}
+
+message MatchReq {
+  uint32 user_id = 1;   // 玩家ID
+  uint32 svr_type = 2;  // 游戏类型
+  uint32 room_id = 3;   // 房间号
+}
+
+message MatchResp {
+  uint32 user_id = 1;   // 玩家ID
+  uint32 svr_type = 2;  // 游戏类型
+  uint32 svr_id = 3;    // 服务ID
+  uint32 room_id = 4;   // 房间号
+  uint32 desk_id = 5;   // 桌号
+}
+
+message LeaveDesk {
+  uint32 svr_type = 1;  // 游戏类型
+  uint32 svr_id = 2;    // 服务ID
+  uint32 room_id = 3;   // 房间号
+  uint32 desk_id = 4;   // 桌号
+  uint32 user_id = 5;   // 玩家ID
+}
+
+message Location {
+  uint32 svr_type = 1;  // 游戏类型
+  uint32 svr_id = 2;    // 服务ID
+  uint32 room_id = 3;   // 房间号
+  uint32 desk_id = 4;   // 桌号
+}
+
+message Err {
+  uint32 code = 1;           // 错误代码
+  string msg = 2;            // 错误描述
+  uint32 origin_msg_id = 3;  // 原消息ID
+}
+
+message ShoppingSuccess {
+  string goods_id = 1;          // 商品ID
+  string name = 2;              // 商品名称
+  uint32 shop_type = 3;         // 销售方式：1 RMB购买；2 钻石购买；3 金币购买
+  string price = 4;             // 价格
+  string real_count = 5;        // 实际获得数量
+  uint32 first_buy_double = 6;  // 首购翻倍：1 是；2 否
+  uint32 item_id = 7;           // 物品ID
+}
+
+message RiseGoods {
+  string goods_id = 1;        // 商品Id
+  string price = 2;           // 商品价格
+  string real_count = 3;      // 实际获得数量
+  string original_count = 4;  // 原来获得数量
+  uint32 shop_type = 5;       // 销售类型：1 RMB购买；2 钻石购买；3 金币购买；4 金豆购买；
+  uint32 rise_level = 6;      // 复活卡等级：1，2，3 级
+}
+
+message NotifyRise {
+  repeated RiseGoods list = 1;  // 复活卡商品列表
+}
+
+message GiveUpRiseReq{}
+
+message GiveUpRiseResp{}
